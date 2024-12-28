@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frontend developer portfolio showcasing web development projects and skills.">
+    <title>Frontend Developer Portfolio - Blqckhat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background: linear-gradient(135deg, #141413f2, #e19e6b);
+            color: rgb(28, 27, 27);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 130px;
+        }
+        .logo img {
+            max-width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 3.0rem;
+            color: rgb(15, 14, 14);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: rgb(9, 9, 9);
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+            font-size: 1.1rem;
+        }
+        nav ul li a:hover {
+            color: #0e0d0d;
+            transform: scale(1.1);
+        }
+
+        #explore {
+            text-align: center;
+            padding: 60px 5%;
+            color: #f8efef;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        #explore h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #070707;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        #projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 5%;
+        }
+
+        #projects h2 {
+            text-align: center;
+            color: #141413;
+            margin-bottom: 40px;
+            transition: transform 0.3s;
+        }
+
+        #projects h2:hover {
+            transform: scale(1.1);
+        }
+
+        .project-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .project-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .project-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-item:hover {
+            transform: scale(1.05);
+        }
+
+        .service-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px;
+            font-size: 1.2rem;
+            color: rgb(24, 23, 23);
+            background: linear-gradient(135deg, #141413f2, #e19e6b);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .service-button:hover {
+            background-color: #0c0c0c;
+            transform: scale(1.1);
+        }
+
+        .contact-form-card {
+            display: none;
+            background-color: #fff;
+            padding: 30px;
+            margin: 50px auto;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transform: translateY(-100%);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .contact-form-card.show {
+            display: block;
+            transform: translateY(0);
+        }
+
+        .contact-form-card h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #141413;
+        }
+
+        .contact-form-card input, .contact-form-card select, .contact-form-card textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .contact-form-card textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-form-card button {
+            background: linear-gradient(135deg, #141413f2, #e19e6b);
+            border: none;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form-card button:hover {
+            background-color: #0c0c0c;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #141413f2, #e19e6b);
+            color: rgb(8, 8, 8);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+
+        /* //////////////////////////////////////////////////////// */
+
+
+        /* Modal styles */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+        <a href="index.html"><img src="images/logo.jpeg" alt="Your Logo"></a>
+    </div>
+    <h1>Blqckhat Frontend Development</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#hire">Hire Me</a></li>
+        </ul>
+    </nav>
+  </header>
+
+  <section id="explore">
+    <h2>Explore My Web Development Projects</h2>
+  </section>
+
+  <section id="projects">
+    <div class="project-item" onclick="showModal('images/webdev1.png')">
+        <img src="images/webdev1.png" alt="Project 1">
+    </div>
+    <div class="project-item" onclick="showModal('images/webdev2.jpg')">
+        <img src="images/webdev2.jpg" alt="Project 2">
+    </div>
+    <div class="project-item" onclick="showModal('images/webdev1.png')">
+        <img src="images/webdev1.png" alt="Project 1">
+    </div>
+    <div class="project-item" onclick="showModal('images/webdev2.jpg')">
+        <img src="images/webdev2.jpg" alt="Project 2">
+    </div><div class="project-item" onclick="showModal('images/webdev1.png')">
+        <img src="images/webdev1.png" alt="Project 1">
+    </div>
+    <div class="project-item" onclick="showModal('images/webdev2.jpg')">
+        <img src="images/webdev2.jpg" alt="Project 2">
+    </div><div class="project-item" onclick="showModal('images/webdev1.png')">
+        <img src="images/webdev1.png" alt="Project 1">
+    </div>
+    <div class="project-item" onclick="showModal('images/webdev2.jpg')">
+        <img src="images/webdev2.jpg" alt="Project 2">
+    </div>
+  </section>
+
+  <section id="hire">
+    <button class="service-button" onclick="toggleForm()">Hire Me for Your Web Development Projects</button>
+  </section>
+
+  <!-- Hire Me Form Card -->
+  <div class="contact-form-card" id="contactForm">
+    <h3>Hire Me</h3>
+    <form id="hireForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="contact_number" placeholder="Contact Number" required>
+        <select name="service" required>
+            <option value="">Select Service</option>
+            <option value="frontend">Frontend Development</option>
+            <option value="uiux">UI/UX Design</option>
+        </select>
+        <textarea name="description" placeholder="Project Description" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="responseMessage"></div>
+  </div>
+
+  <!-- Modal for Full Image -->
+  <div class="modal" id="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Full Image">
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Blqckhat. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Show Modal for Full Image
+    function showModal(imageSrc) {
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    // Close Modal
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    // Toggle Contact Form
+    function toggleForm() {
+        const form = document.getElementById('contactForm');
+        form.classList.toggle('show');
+    }
+
+    document.getElementById('hireForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the form from redirecting
+
+        const formData = new FormData(this); // Collect form data
+        const responseMessage = document.getElementById('responseMessage');
+
+        fetch('submit_form.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text()) // Get response as text
+        .then(data => {
+            responseMessage.innerHTML = data; // Display response
+            responseMessage.style.color = "green"; // Styling success message
+        })
+        .catch(error => {
+            responseMessage.innerHTML = "Error: " + error;
+            responseMessage.style.color = "red"; // Styling error message
+        });
+    });
+  </script>
+
+</body>
+</html>
