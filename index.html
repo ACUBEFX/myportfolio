@@ -304,13 +304,20 @@
         /* //////////////////////////////////////////////// */
 
 
-        @media (max-width: 768px) {
-    header {
+        @media (max-width: 768px){
+        header {
         flex-direction: column;
         align-items: center;
         text-align: center;
         height: auto;
         padding: 15px;
+    }
+    
+    @media(max-width: 480px){
+        .container{
+            margin: 10px auto;
+            padding:5px;
+        }
     }
 
     .logo img {
