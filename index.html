@@ -538,85 +538,59 @@
 
     <script>
     
+   document.addEventListener("DOMContentLoaded", function () {
+
+    // Service Form Submission (Request a Service)
+    document.getElementById("serviceForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get the form data
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("phone").value;
+        const service = document.getElementById("service").value;
+
+        // Construct the WhatsApp message URL
+        const message = `Hi, I am interested in the ${service} service. My name is ${name} and my phone number is ${phone}.`;
+
+        // Encode the message to make it URL-safe
+        const whatsappUrl = `https://wa.me/08166785951?text=${encodeURIComponent(message)}`;
+
+        // Redirect to WhatsApp
+        window.open(whatsappUrl, "_blank");
+
+        // Optionally, close the modal or show a success message
+        document.getElementById("serviceForm").reset();
+        const successMessage = document.getElementById("successMessage");
+        successMessage.style.display = "block";
+        successMessage.textContent = "Your request has been sent to WhatsApp!";
+    });
+
+    // Contact Form Submission (Send Message)
     document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const formData = new FormData(this);
+        // Get the form data
+        const name = this.name.value;
+        const email = this.email.value;
+        const message = this.message.value;
 
-        fetch("save_feedback.php", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                const formMessage = document.getElementById("formMessage");
-                formMessage.style.display = "block";
+        // Construct the WhatsApp message URL
+        const whatsappMessage = `Hi, I received a message from ${name} (${email}). The message is: ${message}`;
 
-                if (data.status === "success") {
-                    formMessage.textContent = data.message;
-                    formMessage.style.color = "green";
-                    this.reset();
-                } else {
-                    formMessage.textContent = data.message;
-                    formMessage.style.color = "red";
-                }
-            })
-            .catch((error) => {
-                alert("An unexpected error occurred: " + error);
-            });
+        // Encode the message to make it URL-safe
+        const whatsappUrl = `https://wa.me/08166785951?text=${encodeURIComponent(whatsappMessage)}`;
+
+        // Redirect to WhatsApp
+        window.open(whatsappUrl, "_blank");
+
+        // Reset the form and show a success message (optional)
+        this.reset();
+        document.getElementById("formMessage").style.display = "block";
+        document.getElementById("formMessage").textContent = "Your message has been sent!";
     });
 
-        // Open the modal
-        const modal = document.getElementById("serviceModal");
-        const btn = document.getElementById("openModal");
-        const closeBtn = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function() {
-            modal.style.display = "flex";
-        }
-
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-     // Handle form submission via AJAX
-     document.getElementById("serviceForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(this);
-
-    // Send data to the PHP script using AJAX
-    fetch("submit.php", {
-        method: "POST",
-        body: formData,
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            const successMessage = document.getElementById("successMessage");
-
-            if (data.status === "success") {
-                // Show success message
-                successMessage.style.display = "block";
-                successMessage.textContent = data.message;
-
-                // Clear the form
-                document.getElementById("serviceForm").reset();
-            } else {
-                // Handle errors
-                alert("Error: " + data.message);
-            }
-        })
-        .catch((error) => {
-            alert("An unexpected error occurred: " + error);
-        });
 });
+
 
 
     </script>
